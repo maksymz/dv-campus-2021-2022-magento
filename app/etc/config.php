@@ -345,6 +345,7 @@ return [
         'Amazon_Login' => 1,
         'Amazon_Payment' => 1,
         'DVCampus_ControllersDemo' => 1,
+        'DVCampus_LayoutDebug' => 1,
         'Dotdigitalgroup_Email' => 1,
         'Dotdigitalgroup_Chat' => 1,
         'Dotdigitalgroup_ChatGraphQl' => 1,
