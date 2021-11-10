@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DVCampus\PersonalDiscount\Controller\Index;
 
+use DVCampus\PersonalDiscount\Model\DiscountRequest;
 use Magento\Framework\App\Request\InvalidRequestException;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\Redirect;
@@ -33,21 +34,45 @@ class Request implements
     private \DVCampus\PersonalDiscount\Model\ResourceModel\DiscountRequest $discountRequestResource;
 
     /**
+     * @var \Magento\Framework\App\RequestInterface $request
+     */
+    private \Magento\Framework\App\RequestInterface $request;
+
+    /**
+     * @var \Magento\Store\Model\StoreManagerInterface $storeManager
+     */
+    private \Magento\Store\Model\StoreManagerInterface $storeManager;
+
+    /**
+     * @var \Psr\Log\LoggerInterface $logger
+     */
+    private \Psr\Log\LoggerInterface $logger;
+
+    /**
      * @param \Magento\Framework\Controller\Result\RedirectFactory $redirectFactory
      * @param \Magento\Framework\Message\ManagerInterface $messageManager
      * @param \DVCampus\PersonalDiscount\Model\DiscountRequestFactory $discountRequestFactory
      * @param \DVCampus\PersonalDiscount\Model\ResourceModel\DiscountRequest $discountRequestResource
+     * @param \Magento\Framework\App\RequestInterface $request
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
         \Magento\Framework\Controller\Result\RedirectFactory $redirectFactory,
         \Magento\Framework\Message\ManagerInterface $messageManager,
         \DVCampus\PersonalDiscount\Model\DiscountRequestFactory $discountRequestFactory,
-        \DVCampus\PersonalDiscount\Model\ResourceModel\DiscountRequest $discountRequestResource
+        \DVCampus\PersonalDiscount\Model\ResourceModel\DiscountRequest $discountRequestResource,
+        \Magento\Framework\App\RequestInterface $request,
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Psr\Log\LoggerInterface $logger
     ) {
         $this->redirectFactory = $redirectFactory;
         $this->messageManager = $messageManager;
         $this->discountRequestFactory = $discountRequestFactory;
         $this->discountRequestResource = $discountRequestResource;
+        $this->request = $request;
+        $this->storeManager = $storeManager;
+        $this->logger = $logger;
     }
 
     /**
@@ -58,10 +83,26 @@ class Request implements
     public function execute(): Redirect
     {
         //@TODO: implement saving data
+        /** @var DiscountRequest $discountRequest */
         $discountRequest = $this->discountRequestFactory->create();
-        // $this->discountRequestResource->save($discountRequest)/
 
-        $this->messageManager->addSuccessMessage('Your request has been submitted');
+        try {
+            $discountRequest->setProductId((int) $this->request->getParam('product_id'))
+                ->setName($this->request->getParam('name'))
+                ->setEmail($this->request->getParam('email'))
+                ->setMessage($this->request->getParam('email'))
+                ->setStoreId($this->storeManager->getStore()->getId());
+
+            $this->discountRequestResource->save($discountRequest);
+            $this->messageManager->addSuccessMessage(
+                __('You request for product %1 accepted for review!', $this->request->getParam('productName'))
+            );
+        } catch (\Exception $e) {
+            $this->logger->error($e->getMessage());
+            $this->messageManager->addErrorMessage(
+                __('Your request can\'t be sent. Please, contact us if you see this message.')
+            );
+        }
 
         $redirect = $this->redirectFactory->create();
         $redirect->setRefererUrl();
