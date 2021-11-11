@@ -44,6 +44,11 @@ class Request implements
     private \Magento\Store\Model\StoreManagerInterface $storeManager;
 
     /**
+     * @var \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
+     */
+    private \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator;
+
+    /**
      * @var \Psr\Log\LoggerInterface $logger
      */
     private \Psr\Log\LoggerInterface $logger;
@@ -55,6 +60,7 @@ class Request implements
      * @param \DVCampus\PersonalDiscount\Model\ResourceModel\DiscountRequest $discountRequestResource
      * @param \Magento\Framework\App\RequestInterface $request
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
      * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
@@ -64,6 +70,7 @@ class Request implements
         \DVCampus\PersonalDiscount\Model\ResourceModel\DiscountRequest $discountRequestResource,
         \Magento\Framework\App\RequestInterface $request,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
         \Psr\Log\LoggerInterface $logger
     ) {
         $this->redirectFactory = $redirectFactory;
@@ -72,6 +79,7 @@ class Request implements
         $this->discountRequestResource = $discountRequestResource;
         $this->request = $request;
         $this->storeManager = $storeManager;
+        $this->formKeyValidator = $formKeyValidator;
         $this->logger = $logger;
     }
 
@@ -82,7 +90,6 @@ class Request implements
      */
     public function execute(): Redirect
     {
-        //@TODO: implement saving data
         /** @var DiscountRequest $discountRequest */
         $discountRequest = $this->discountRequestFactory->create();
 
@@ -90,7 +97,7 @@ class Request implements
             $discountRequest->setProductId((int) $this->request->getParam('product_id'))
                 ->setName($this->request->getParam('name'))
                 ->setEmail($this->request->getParam('email'))
-                ->setMessage($this->request->getParam('email'))
+                ->setMessage($this->request->getParam('message'))
                 ->setStoreId($this->storeManager->getStore()->getId());
 
             $this->discountRequestResource->save($discountRequest);
@@ -125,10 +132,10 @@ class Request implements
      * Perform custom request validation. Return null if default validation is needed.
      *
      * @param RequestInterface $request
-     * @return bool|null
+     * @return bool
      */
-    public function validateForCsrf(RequestInterface $request): ?bool
+    public function validateForCsrf(RequestInterface $request): bool
     {
-        return null;
+        return $this->formKeyValidator->validate($request);
     }
 }
