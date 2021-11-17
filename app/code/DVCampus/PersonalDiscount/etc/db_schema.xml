@@ -29,6 +29,9 @@
         <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
                 comment="Updated At"
         />
+        <column xsi:type="varchar" name="demo_column_to_be_deleted" nullable="true"
+                comment="Demo Column To Be Deleted"
+        />
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="discount_request_id"/>
         </constraint>
@@ -65,5 +68,9 @@
                     referenceColumn="store_id"
                     onDelete="SET NULL"
         />
+        <constraint xsi:type="unique" referenceId="DV_CAMPUS_PERSONAL_DISCOUNT_EMAIL_STORE_ID">
+            <column name="email"/>
+            <column name="store_id"/>
+        </constraint>
     </table>
 </schema>
