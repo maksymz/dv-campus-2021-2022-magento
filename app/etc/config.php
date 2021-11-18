@@ -344,6 +344,8 @@ return [
         'Amazon_Core' => 1,
         'Amazon_Login' => 1,
         'Amazon_Payment' => 1,
+        'DVCampus_Catalog' => 1,
+        'DVCampus_Cms' => 1,
         'DVCampus_ControllersDemo' => 1,
         'DVCampus_LayoutDebug' => 1,
         'DVCampus_PersonalDiscount' => 1,
