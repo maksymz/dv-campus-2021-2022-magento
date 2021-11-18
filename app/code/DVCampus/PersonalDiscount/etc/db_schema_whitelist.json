@@ -9,8 +9,7 @@
             "message": true,
             "store_id": true,
             "created_at": true,
-            "updated_at": true,
-            "demo_column_to_be_deleted": true
+            "updated_at": true
         },
         "index": {
             "DV_CAMPUS_PERSONAL_DISCOUNT_REQUEST_PRODUCT_ID": true,
@@ -21,8 +20,7 @@
             "PRIMARY": true,
             "FK_68639DD926623E304E1418089814DD13": true,
             "FK_5BBB19523714F56945A93C55FDC5C179": true,
-            "FK_43621618F493BC82176FE6E5D92F32E9": true,
-            "DV_CAMPUS_PERSONAL_DISCOUNT_EMAIL_STORE_ID": true
+            "FK_43621618F493BC82176FE6E5D92F32E9": true
         }
     }
 }
