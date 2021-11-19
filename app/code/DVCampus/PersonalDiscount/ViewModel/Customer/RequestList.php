@@ -38,6 +38,11 @@ class RequestList implements \Magento\Framework\View\Element\Block\ArgumentInter
     private ProductCollection $loadedProductCollection;
 
     /**
+     * @var \Magento\Catalog\Model\Product\Visibility $productVisibility
+     */
+    private \Magento\Catalog\Model\Product\Visibility $productVisibility;
+
+    /**
      * @param DiscountRequestCollectionFactory $discountRequestCollectionFactory
      * @param \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
@@ -45,11 +50,13 @@ class RequestList implements \Magento\Framework\View\Element\Block\ArgumentInter
     public function __construct(
         DiscountRequestCollectionFactory $discountRequestCollectionFactory,
         \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Magento\Catalog\Model\Product\Visibility $productVisibility
     ) {
         $this->discountRequestCollectionFactory = $discountRequestCollectionFactory;
         $this->storeManager = $storeManager;
         $this->productCollectionFactory = $productCollectionFactory;
+        $this->productVisibility = $productVisibility;
     }
 
     /**
@@ -90,12 +97,14 @@ class RequestList implements \Magento\Framework\View\Element\Block\ArgumentInter
         }
 
         $discountRequestCollection = $this->getDiscountRequestCollection();
-        $productIds = array_filter($discountRequestCollection->getColumnValues('product_id'));
+        $productIds = array_unique(array_filter($discountRequestCollection->getColumnValues('product_id')));
 
         $productCollection = $this->productCollectionFactory->create();
-        $productCollection->addAttributeToFilter('entity_id', $productIds)
+        // Inactive products are filtered by default
+        $productCollection->addAttributeToFilter('entity_id', ['in' => $productIds])
             ->addAttributeToSelect('name')
-            ->addWebsiteFilter();
+            ->addWebsiteFilter()
+            ->setVisibility($this->productVisibility->getVisibleInSiteIds());
         $this->loadedProductCollection = $productCollection;
 
         return $this->loadedProductCollection->getItemById($productId);

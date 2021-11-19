@@ -33,8 +33,9 @@ class RemoveDemoColumnAndEmailStoreIdIndex implements \Magento\Framework\Setup\P
         $connection->dropColumn($tableName, 'demo_column_to_be_deleted');
 
         foreach ($connection->getIndexList($tableName) as $indexName => $indexMetadata) {
-            if (!array_diff($indexMetadata['COLUMNS_LIST'], ['email', 'store_id'])
-                && count($indexMetadata['COLUMNS_LIST'] === 2)
+            if ($indexMetadata['INDEX_TYPE'] === 'unique'
+                && count($indexMetadata['COLUMNS_LIST']) === 2
+                && !array_diff($indexMetadata['COLUMNS_LIST'], ['email', 'store_id'])
             ) {
                 $connection->dropIndex($tableName, $indexName);
                 break;
