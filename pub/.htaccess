@@ -122,6 +122,13 @@
     Options +FollowSymLinks
     RewriteEngine on
 
+    # Development
+    SetEnvIf Host .*dv-campus-2021-2022-magento-local.allbugs.info.* MAGE_RUN_CODE=default
+    SetEnvIf Host .*dv-campus-2021-2022-magento-local.allbugs.info.* MAGE_RUN_TYPE=store
+    SetEnvIf Host .*dv-campus-2021-2022-magento-us.allbugs.info.* MAGE_RUN_CODE=us_store_view
+    SetEnvIf Host .*dv-campus-2021-2022-magento-us.allbugs.info.* MAGE_RUN_TYPE=store
+
+    # Production
     SetEnvIf Host .*dv-campus-2021-2022-magento.local.* MAGE_RUN_CODE=default
     SetEnvIf Host .*dv-campus-2021-2022-magento.local.* MAGE_RUN_TYPE=store
     SetEnvIf Host .*dv-campus-2021-2022-magento.us.* MAGE_RUN_CODE=us_store_view
