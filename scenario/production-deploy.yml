@@ -29,7 +29,7 @@ deployment:
   description: 'Pull changes, install dependencies, copy files from the build system.'
   # Database backup configuration
   database:
-    backup: false
+    backup: true
     backup-limit: 3
     backup-additional-parameters: '--no-tablespaces --insert-ignore --skip-lock-tables --single-transaction=TRUE'
   stage:
@@ -38,7 +38,7 @@ deployment:
         - command: 'git pull {branch}'
           executor: shell
         - command: >
-            sed -i "s/'MAGE_MODE' => 'production',/'MAGE_MODE' => 'default',/g" app/etc/env.production.php
+            sed -i "s/'MAGE_MODE' => 'production',/'MAGE_MODE' => 'default',/g" app/etc/env.php
           executor: shell
         - command: 'install --no-dev'
           executor: composer
@@ -77,7 +77,7 @@ deployment:
           executor: php
         - command: 'bin/magento cache:flush'
           executor: php
-        - command: 'bin/magento indexer:set-mode schedule'
-          executor: php
-        - command: 'bin/magento indexer:set-mode realtime customer_grid'
-          executor: php
+#        - command: 'bin/magento indexer:set-mode schedule'
+#          executor: php
+#        - command: 'bin/magento indexer:set-mode realtime customer_grid'
+#          executor: php

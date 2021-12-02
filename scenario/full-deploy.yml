@@ -68,9 +68,9 @@ deployment:
           executor: php
         - command: 'bin/magento cache:flush'
           executor: php
-        - command: 'bin/magento indexer:set-mode schedule'
-          executor: php
-        - command: 'bin/magento indexer:set-mode realtime customer_grid'
-          executor: php
+#        - command: 'bin/magento indexer:set-mode schedule'
+#          executor: php
+#        - command: 'bin/magento indexer:set-mode realtime customer_grid'
+#          executor: php
         - command: 'bin/magento maintenance:disable'
           executor: php
