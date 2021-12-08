@@ -10,23 +10,39 @@ use Magento\Framework\View\Layout;
 
 class DumpMergedLayoutAndHandles implements \Magento\Framework\Event\ObserverInterface
 {
+    /**
+     * @var \Magento\Framework\UrlInterface $url
+     */
     private \Magento\Framework\UrlInterface $url;
 
+    /**
+     * @var \Magento\Framework\App\Filesystem\DirectoryList $dir
+     */
     private \Magento\Framework\App\Filesystem\DirectoryList $dir;
+
+    /**
+     * @var \Magento\Framework\Filesystem\Driver\File $fileDriver
+     */
+    private \Magento\Framework\Filesystem\Driver\File $fileDriver;
 
     /**
      * @param \Magento\Framework\UrlInterface $url
      * @param \Magento\Framework\App\Filesystem\DirectoryList $dir
+     * @param \Magento\Framework\Filesystem\Driver\File $fileDriver
      */
     public function __construct(
         \Magento\Framework\UrlInterface $url,
-        \Magento\Framework\App\Filesystem\DirectoryList $dir
+        \Magento\Framework\App\Filesystem\DirectoryList $dir,
+        \Magento\Framework\Filesystem\Driver\File $fileDriver
     ) {
         $this->url = $url;
         $this->dir = $dir;
+        $this->fileDriver = $fileDriver;
     }
 
     /**
+     * Dump page layout handles and current page layout
+     *
      * @param Observer $observer
      * @return void
      * @throws \Magento\Framework\Exception\FileSystemException
@@ -43,16 +59,14 @@ class DumpMergedLayoutAndHandles implements \Magento\Framework\Event\ObserverInt
             $layoutHandles[] = '- ' . $handle;
         }
 
-        // ONLY FOR DEBUG! Use \Magento\Framework\Filesystem\Directory\Write::writeFile() instead!
-        file_put_contents(
+        $this->fileDriver->filePutContents(
             $logsDir . 'layout_handles.log',
             implode("\n", $layoutHandles) . "\n\n",
             FILE_APPEND
         );
 
         // Get merged page layout
-        // ONLY FOR DEBUG! Use \Magento\Framework\Filesystem\Directory\Write::writeFile() instead!
-        file_put_contents(
+        $this->fileDriver->filePutContents(
             $logsDir . 'layout_merged.xml',
             $layout->getXmlString() . "\n\n"
         );

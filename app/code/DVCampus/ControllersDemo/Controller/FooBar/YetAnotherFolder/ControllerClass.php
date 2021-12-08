@@ -9,8 +9,14 @@ use Magento\Framework\Controller\Result\Json;
 class ControllerClass implements
     \Magento\Framework\App\Action\HttpGetActionInterface
 {
+    /**
+     * @var \Magento\Framework\App\RequestInterface $request
+     */
     private \Magento\Framework\App\RequestInterface $request;
 
+    /**
+     * @var \Magento\Framework\Controller\Result\JsonFactory $jsonFactory
+     */
     private \Magento\Framework\Controller\Result\JsonFactory $jsonFactory;
 
     /**
@@ -27,6 +33,8 @@ class ControllerClass implements
 
     /**
      * Controller demo
+     *
+     * Page URL:
      * https://dv-campus-2021-2022-magento.local/dv-campus-controller-demo/foobar_yetanotherfolder/controllerclass/parameter-name-1/test/
      *
      * @return Json

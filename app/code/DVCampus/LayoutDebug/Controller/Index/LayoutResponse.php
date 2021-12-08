@@ -8,6 +8,9 @@ use Magento\Framework\View\Result\Layout;
 
 class LayoutResponse implements \Magento\Framework\App\Action\HttpGetActionInterface
 {
+    /**
+     * @var \Magento\Framework\View\Result\LayoutFactory $layoutFactory
+     */
     private \Magento\Framework\View\Result\LayoutFactory $layoutFactory;
 
     /**
