@@ -24,7 +24,9 @@ $viewModel = $block->getData('view_model');
                  * 2. $discountRequest->getProductName() - to be implemented in the future
                  */
                 ?>
-                <span><?= $escaper->escapeHtml(__('Requested product:') . ' n/a'/*$discountRequest->getProductName()*/) ?></span>
+                <span>
+                    <?= $escaper->escapeHtml(__('Requested product:') . ' n/a'/*$discountRequest->getProductName()*/) ?>
+                </span>
             <?php endif; ?>
             <br/>
             <span><?= $escaper->escapeHtml(__('Message: %1', $discountRequest->getMessage())) ?></span>
