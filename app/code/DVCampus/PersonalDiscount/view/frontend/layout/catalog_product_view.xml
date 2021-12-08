@@ -3,11 +3,11 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
 >
     <body>
-        <referenceContainer name="content">
+        <referenceContainer name="product.info.main">
             <block class="DVCampus\PersonalDiscount\Block\Product\View\DiscountRequest"
                    name="dv.campus.personal.discount.form"
                    template="DVCampus_PersonalDiscount::catalog/product/view/discount/personal_discount_request.phtml"
-                   before="product.info.details"
+                   after="-"
             >
                 <arguments>
                     <argument name="cache_lifetime" xsi:type="number">84600</argument>

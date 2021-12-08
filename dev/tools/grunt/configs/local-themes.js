@@ -8,6 +8,16 @@
  * grunt exec:dvcampus_luma_uk_ua && grunt less:dvcampus_luma_uk_ua && grunt watch:dvcampus_luma_uk_ua
  */
 module.exports = {
+    luma: {
+        area: 'frontend',
+        name: 'Magento/luma',
+        locale: 'en_US',
+        files: [
+            'css/styles-m',
+            'css/styles-l'
+        ],
+        dsl: 'less'
+    },
     dvcampus_luma_uk_ua: {
         area: 'frontend',
         name: 'DVCampus/luma',
