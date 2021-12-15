@@ -12,6 +12,9 @@ $product = $block->getData('product');
           id="dv-campus-personal-discount-form"
           action="<?= $escaper->escapeHtmlAttr($block->getData('request_submit_url')) ?>"
           method="post"
+          data-mage-init='{
+              "DVCampus_PersonalDiscount_form": "<?= $escaper->escapeJs(__('Discount Request')) ?>"
+          }'
     >
         <fieldset class="fieldset">
             <legend class="legend">
