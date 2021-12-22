@@ -3,7 +3,7 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
 >
     <body>
-        <move element="dv.campus.personal.discount.form" destination="dv-campus-personal-discount-tab"/>
+        <move element="dv.campus.personal.discount.form.container" destination="dv-campus-personal-discount-tab"/>
 
         <referenceBlock name="product.info.details">
             <block class="Magento\Framework\View\Element\Text\ListText"

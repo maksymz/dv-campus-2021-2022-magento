@@ -1,6 +1,8 @@
 define([
     'jquery',
-    'Magento_Ui/js/modal/alert'
+    'Magento_Ui/js/modal/alert',
+    'Magento_Ui/js/modal/modal',
+    'mage/translate'
 ], function ($, alert) {
     'use strict';
 
@@ -13,7 +15,19 @@ define([
          * @private
          */
         _create: function () {
+            $(this.element).modal({
+                buttons: []
+            });
+
             $(this.element).on('submit.dv_campus_personal_discount_form', this.sendRequest.bind(this));
+            $(document).on('dv_campus_personal_discount_form_open', this.openModal.bind(this));
+        },
+
+        /**
+         * Open modal dialog
+         */
+        openModal: function () {
+            $(this.element).modal('openModal');
         },
 
         /**
@@ -63,6 +77,7 @@ define([
                  * @inheritdoc
                  */
                 success: function (response) {
+                    $(this.element).modal('closeModal');
                     alert({
                         title: $.mage.__('Posting your request...'),
                         content: response.message
