@@ -6,6 +6,8 @@
  */
 /** @var \Magento\Catalog\Model\Product $product */
 $product = $block->getData('product');
+// Show form in modal window by default
+$isModal = $block->hasData('is_modal') ? (int) $block->getData('is_modal') : 1;
 ?>
 <div class="dv-campus-personal-discount-request">
     <form class="form dv-campus-personal-discount-form"
@@ -13,7 +15,8 @@ $product = $block->getData('product');
           onsubmit="return false;"
           method="post"
           data-mage-init='{"DVCampus_PersonalDiscount_form":{
-              "action": "<?= $escaper->escapeHtmlAttr($block->getUrl('dvcampus_personal_discount/index/request')) ?>"
+              "action": "<?= $escaper->escapeHtmlAttr($block->getUrl('dvcampus_personal_discount/index/request')) ?>",
+              "isModal": <?= $escaper->escapeHtmlAttr($isModal) ?>
           }}'
     >
         <fieldset class="fieldset">

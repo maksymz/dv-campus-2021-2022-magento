@@ -8,19 +8,23 @@ define([
 
     $.widget('DVCampus.personalDiscount_form', {
         options: {
-            action: ''
+            action: '',
+            isModal: 1
         },
 
         /**
          * @private
          */
         _create: function () {
-            $(this.element).modal({
-                buttons: []
-            });
-
             $(this.element).on('submit.dv_campus_personal_discount_form', this.sendRequest.bind(this));
-            $(document).on('dv_campus_personal_discount_form_open', this.openModal.bind(this));
+
+            if (this.options.isModal) {
+                $(this.element).modal({
+                    buttons: []
+                });
+
+                $(document).on('dv_campus_personal_discount_form_open', this.openModal.bind(this));
+            }
         },
 
         /**
