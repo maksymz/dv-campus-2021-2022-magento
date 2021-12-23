@@ -2,14 +2,15 @@ define([
     'jquery',
     'Magento_Ui/js/modal/alert',
     'Magento_Ui/js/modal/modal',
-    'mage/translate'
+    'mage/translate',
+    'mage/cookies'
 ], function ($, alert) {
     'use strict';
 
     $.widget('DVCampus.personalDiscount_form', {
         options: {
             action: '',
-            isModal: 1
+            isModal: true
         },
 
         /**
@@ -58,6 +59,7 @@ define([
         ajaxSubmit: function () {
             let formData = new FormData($(this.element).get(0));
 
+            // Form key is not appended when the form is in the tab. Must add it manually
             formData.append('form_key', $.mage.cookies.get('form_key'));
             formData.append('isAjax', 1);
 
@@ -81,7 +83,6 @@ define([
                  * @inheritdoc
                  */
                 success: function (response) {
-                    $(this.element).modal('closeModal');
                     alert({
                         title: $.mage.__('Posting your request...'),
                         content: response.message
@@ -98,6 +99,10 @@ define([
 
                 /** @inheritdoc */
                 complete: function () {
+                    if (this.options.isModal) {
+                        $(this.element).modal('closeModal');
+                    }
+
                     $('body').trigger('processStop');
                 }
             });

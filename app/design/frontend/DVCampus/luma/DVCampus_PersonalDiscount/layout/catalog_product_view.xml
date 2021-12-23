@@ -23,7 +23,7 @@
 
         <referenceBlock name="dv.campus.personal.discount.form">
             <arguments>
-                <argument name="is_modal" xsi:type="number">0</argument>
+                <argument name="is_modal" xsi:type="boolean">false</argument>
             </arguments>
         </referenceBlock>
     </body>

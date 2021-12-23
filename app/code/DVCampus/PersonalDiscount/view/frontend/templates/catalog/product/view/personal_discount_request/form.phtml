@@ -7,7 +7,11 @@
 /** @var \Magento\Catalog\Model\Product $product */
 $product = $block->getData('product');
 // Show form in modal window by default
-$isModal = $block->hasData('is_modal') ? (int) $block->getData('is_modal') : 1;
+if ($block->hasData('is_modal')) {
+    $isModal = $block->getData('is_modal') ? 'true' : 'false';
+} else {
+    $isModal = 'true';
+}
 ?>
 <div class="dv-campus-personal-discount-request">
     <form class="form dv-campus-personal-discount-form"
