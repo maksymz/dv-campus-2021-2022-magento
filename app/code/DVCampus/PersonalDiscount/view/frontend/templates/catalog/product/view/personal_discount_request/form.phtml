@@ -6,15 +6,22 @@
  */
 /** @var \Magento\Catalog\Model\Product $product */
 $product = $block->getData('product');
+// Show form in modal window by default
+if ($block->hasData('is_modal')) {
+    $isModal = $block->getData('is_modal') ? 'true' : 'false';
+} else {
+    $isModal = 'true';
+}
 ?>
 <div class="dv-campus-personal-discount-request">
-    <form class="form"
-          id="dv-campus-personal-discount-form"
-          action="<?= $escaper->escapeHtmlAttr($block->getData('request_submit_url')) ?>"
+    <form class="form dv-campus-personal-discount-form"
+          action="/errors/404.php"
+          onsubmit="return false;"
           method="post"
-          data-mage-init='{
-              "DVCampus_PersonalDiscount_form": "<?= $escaper->escapeJs(__('Discount Request')) ?>"
-          }'
+          data-mage-init='{"DVCampus_PersonalDiscount_form":{
+              "action": "<?= $escaper->escapeHtmlAttr($block->getUrl('dvcampus_personal_discount/index/request')) ?>",
+              "isModal": <?= $escaper->escapeHtmlAttr($isModal) ?>
+          }}'
     >
         <fieldset class="fieldset">
             <legend class="legend">
@@ -30,6 +37,7 @@ $product = $block->getData('product');
                            title="<?= $escaper->escapeHtmlAttr(__('Name')) ?>"
                            class="input-text"
                            type="text"
+                           data-validate="{required:true}"
                     />
                 </div>
             </div>
@@ -42,6 +50,7 @@ $product = $block->getData('product');
                            title="<?= $escaper->escapeHtmlAttr(__('Email')) ?>"
                            class="input-text"
                            type="email"
+                           data-validate="{required:true, 'validate-email':true}"
                     />
                 </div>
             </div>
@@ -53,6 +62,7 @@ $product = $block->getData('product');
                     <textarea name="message"
                               title="<?= $escaper->escapeHtmlAttr(__('Message')) ?>"
                               class="input-text"
+                              data-validate="{required:true}"
                     ></textarea>
                 </div>
             </div>

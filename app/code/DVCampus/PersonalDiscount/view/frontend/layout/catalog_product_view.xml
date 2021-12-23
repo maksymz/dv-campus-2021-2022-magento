@@ -4,23 +4,29 @@
 >
     <body>
         <referenceContainer name="product.info.main">
-            <block class="DVCampus\PersonalDiscount\Block\Product\View\DiscountRequest"
-                   name="dv.campus.personal.discount.form"
-                   template="DVCampus_PersonalDiscount::catalog/product/view/discount/personal_discount_request.phtml"
-                   after="-"
-            >
-                <arguments>
-                    <argument name="cache_lifetime" xsi:type="number">84600</argument>
-                    <argument name="request_submit_url"
-                              path="dvcampus_personal_discount/index/request"
-                              xsi:type="url"
-                    />
-                    <argument name="product"
-                              helper="Magento\Catalog\Helper\Data::getProduct"
-                              xsi:type="helper"
-                    />
-                </arguments>
-            </block>
+            <container name="dv.campus.personal.discount.form.container">
+                <block class="DVCampus\PersonalDiscount\Block\Product\View\DiscountRequest"
+                       name="dv.campus.personal.discount.form"
+                       template="DVCampus_PersonalDiscount::catalog/product/view/personal_discount_request/form.phtml"
+                       after="-"
+                >
+                    <arguments>
+                        <argument name="cache_lifetime" xsi:type="number">84600</argument>
+                        <argument name="request_submit_url"
+                                  path="dvcampus_personal_discount/index/request"
+                                  xsi:type="url"
+                        />
+                        <argument name="product"
+                                  helper="Magento\Catalog\Helper\Data::getProduct"
+                                  xsi:type="helper"
+                        />
+                    </arguments>
+                </block>
+                <block class="Magento\Framework\View\Element\Template"
+                       name="dv.campus.personal.discount.form.open.button"
+                       template="DVCampus_PersonalDiscount::catalog/product/view/personal_discount_request/form_open_button.phtml"
+                />
+            </container>
         </referenceContainer>
     </body>
 </page>

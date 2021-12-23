@@ -3,7 +3,11 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
 >
     <body>
-        <move element="dv.campus.personal.discount.form" destination="dv-campus-personal-discount-tab"/>
+        <move element="dv.campus.personal.discount.form.container" destination="dv-campus-personal-discount-tab"/>
+
+        <!-- @TODO: find a way to notify all buttons that form is not displayed in the modal popup -->
+        <!-- Otherwise, all buttons must be removed, and it is not possible to implement a configurable form widget -->
+        <referenceBlock name="dv.campus.personal.discount.form.open.button" remove="true"/>
 
         <referenceBlock name="product.info.details">
             <block class="Magento\Framework\View\Element\Text\ListText"
@@ -15,6 +19,12 @@
                     <argument translate="true" name="title" xsi:type="string">Personal Discount</argument>
                 </arguments>
             </block>
+        </referenceBlock>
+
+        <referenceBlock name="dv.campus.personal.discount.form">
+            <arguments>
+                <argument name="is_modal" xsi:type="boolean">false</argument>
+            </arguments>
         </referenceBlock>
     </body>
 </page>
