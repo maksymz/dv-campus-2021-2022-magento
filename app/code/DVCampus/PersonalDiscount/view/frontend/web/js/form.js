@@ -1,10 +1,11 @@
 define([
     'jquery',
+    'Magento_Customer/js/customer-data',
     'Magento_Ui/js/modal/alert',
     'Magento_Ui/js/modal/modal',
     'mage/translate',
     'mage/cookies'
-], function ($, alert) {
+], function ($, customerData, alert) {
     'use strict';
 
     $.widget('DVCampus.personalDiscount_form', {
@@ -26,6 +27,16 @@ define([
 
                 $(document).on('dv_campus_personal_discount_form_open', this.openModal.bind(this));
             }
+
+            this.updateFormState(customerData.get('personal-discount')());
+            customerData.get('personal-discount').subscribe(this.updateFormState.bind(this));
+        },
+
+        /**
+         * Pre-fill form fields with data, hide fields if needed.
+         */
+        updateFormState: function (personalInfo) {
+            console.log(personalInfo);
         },
 
         /**

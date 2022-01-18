@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace DVCampus\PersonalDiscount\ViewModel\Customer;
 
-use DVCampus\PersonalDiscount\Model\ResourceModel\DiscountRequest\CollectionFactory as DiscountRequestCollectionFactory;
 use DVCampus\PersonalDiscount\Model\ResourceModel\DiscountRequest\Collection as DiscountRequestCollection;
 use Magento\Catalog\Model\ResourceModel\Product\Collection as ProductCollection;
 use Magento\Catalog\Model\Product;
-use Magento\Store\Model\Website;
 
 class RequestList implements \Magento\Framework\View\Element\Block\ArgumentInterface
 {
     /**
-     * @var DiscountRequestCollectionFactory $discountRequestCollectionFactory
+     * @var \DVCampus\PersonalDiscount\Model\CustomerRequestsProvider $customerRequestsProvider
      */
-    private DiscountRequestCollectionFactory $discountRequestCollectionFactory;
+    private \DVCampus\PersonalDiscount\Model\CustomerRequestsProvider $customerRequestsProvider;
 
     /**
      * @var \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory
@@ -23,14 +21,9 @@ class RequestList implements \Magento\Framework\View\Element\Block\ArgumentInter
     private \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory;
 
     /**
-     * @var \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @var \Magento\Catalog\Model\Product\Visibility $productVisibility
      */
-    private \Magento\Store\Model\StoreManagerInterface $storeManager;
-
-    /**
-     * @var DiscountRequestCollection $loadedDiscountRequestCollection
-     */
-    private DiscountRequestCollection $loadedDiscountRequestCollection;
+    private \Magento\Catalog\Model\Product\Visibility $productVisibility;
 
     /**
      * @var ProductCollection $loadedProductCollection
@@ -38,34 +31,18 @@ class RequestList implements \Magento\Framework\View\Element\Block\ArgumentInter
     private ProductCollection $loadedProductCollection;
 
     /**
-     * @var \Magento\Catalog\Model\Product\Visibility $productVisibility
-     */
-    private \Magento\Catalog\Model\Product\Visibility $productVisibility;
-
-    /**
-     * @var \Magento\Customer\Model\Session $customerSession
-     */
-    private \Magento\Customer\Model\Session $customerSession;
-
-    /**
-     * @param DiscountRequestCollectionFactory $discountRequestCollectionFactory
+     * @param \DVCampus\PersonalDiscount\Model\CustomerRequestsProvider $customerRequestsProvider
      * @param \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Catalog\Model\Product\Visibility $productVisibility
-     * @param \Magento\Customer\Model\Session $customerSession
+     * @param Product\Visibility $productVisibility
      */
     public function __construct(
-        DiscountRequestCollectionFactory $discountRequestCollectionFactory,
+        \DVCampus\PersonalDiscount\Model\CustomerRequestsProvider $customerRequestsProvider,
         \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Catalog\Model\Product\Visibility $productVisibility,
-        \Magento\Customer\Model\Session $customerSession
+        \Magento\Catalog\Model\Product\Visibility $productVisibility
     ) {
-        $this->discountRequestCollectionFactory = $discountRequestCollectionFactory;
-        $this->storeManager = $storeManager;
+        $this->customerRequestsProvider = $customerRequestsProvider;
         $this->productCollectionFactory = $productCollectionFactory;
         $this->productVisibility = $productVisibility;
-        $this->customerSession = $customerSession;
     }
 
     /**
@@ -75,21 +52,7 @@ class RequestList implements \Magento\Framework\View\Element\Block\ArgumentInter
      */
     public function getDiscountRequestCollection(): DiscountRequestCollection
     {
-        if (isset($this->loadedDiscountRequestCollection)) {
-            return $this->loadedDiscountRequestCollection;
-        }
-
-        /** @var Website $website */
-        $website = $this->storeManager->getWebsite();
-
-        /** @var DiscountRequestCollection $collection */
-        $collection = $this->discountRequestCollectionFactory->create();
-        $collection->addFieldToFilter('customer_id', $this->customerSession->getCustomerId());
-        // @TODO: check if accounts are shared per website or not
-        $collection->addFieldToFilter('store_id', ['in' => $website->getStoreIds()]);
-        $this->loadedDiscountRequestCollection = $collection;
-
-        return $this->loadedDiscountRequestCollection;
+        return $this->customerRequestsProvider->getCurrentCustomerRequestCollection();
     }
 
     /**
