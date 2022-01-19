@@ -27,6 +27,10 @@ define([
             });
 
             return this;
+        },
+
+        sendRequest: function () {
+            console.log('Going to submit the form');
         }
     });
 
