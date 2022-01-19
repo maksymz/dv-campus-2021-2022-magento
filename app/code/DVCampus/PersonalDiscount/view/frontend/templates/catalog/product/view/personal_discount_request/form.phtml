@@ -23,7 +23,10 @@ if ($block->hasData('is_modal')) {
             "Magento_Ui/js/core/app": {
                 "components": {
                     "personalDiscountRequestForm": {
-                        "component": "DVCampus_PersonalDiscount_form"
+                        "component": "DVCampus_PersonalDiscount_form",
+                        "action": "<?= $escaper->escapeJs($block->getUrl('dvcampus_personal_discount/index/request')) ?>",
+                        "productId": <?= (int) $block->getProduct()->getId() ?>,
+                        "isModal": <?= $escaper->escapeJs($isModal) ?>
                     }
                 }
             }
