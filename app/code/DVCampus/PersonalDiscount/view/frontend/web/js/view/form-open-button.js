@@ -1,17 +1,16 @@
 define([
     'jquery',
-    'jquery/ui'
-], function ($) {
+    'uiComponent',
+    'DVCampus_PersonalDiscount_formSubmitRestrictions'
+], function ($, Component, formSubmitRestrictions) {
     'use strict';
 
-    $.widget('DVCampus.personalDiscount_formOpenButton', {
-        /**
-         * Constructor
-         * @private
-         */
-        _create: function () {
-            $(this.element).click(this.openRequestForm.bind(this));
+    return Component.extend({
+        defaults: {
+            template: 'DVCampus_PersonalDiscount/form-open-button'
         },
+
+        formSubmitIsRestricted: formSubmitRestrictions.formSubmitDeniedMessage,
 
         /**
          * Generate event to open the form
@@ -20,6 +19,4 @@ define([
             $(document).trigger('dv_campus_personal_discount_form_open');
         }
     });
-
-    return $.DVCampus.personalDiscount_formOpenButton;
 });
