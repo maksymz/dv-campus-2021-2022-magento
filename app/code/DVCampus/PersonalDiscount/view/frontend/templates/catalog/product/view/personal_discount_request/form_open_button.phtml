@@ -6,6 +6,20 @@
  */
 ?>
 <?php /** @TODO: only logged in customers must be able to make a request. Show login form on button click */ ?>
-<button class="action primary" data-mage-init='{"DVCampus_PersonalDiscount_formOpenButton": {}}'>
-    <span><?= $escaper->escapeHtml(__('Request Personal Discount')) ?></span>
-</button>
+<div data-bind="scope: 'personalDiscountRequestButton'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "personalDiscountRequestButton": {
+                        "component": "DVCampus_PersonalDiscount_formOpenButton"
+                    }
+                }
+            }
+        }
+    }
+</script>

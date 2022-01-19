@@ -1,13 +1,14 @@
 "You request for product %1 accepted for review!","You request for product %1 accepted for review!"
 "Your request can't be sent. Please, contact us if you see this message.","Your request can't be sent. Please, contact us if you see this message."
+"Request Personal Discount","Request Personal Discount"
+"Requested product:","Requested product:"
+"Message: %1","Message: %1"
 "Discount Request","Discount Request"
 Name,Name
 Email,Email
 Message,Message
-"Send Request","Send Request"
-"Request Personal Discount","Request Personal Discount"
-"Requested product:","Requested product:"
-"Message: %1","Message: %1"
+"Request a Discount","Request a Discount"
 "Posting your request...","Posting your request..."
 Error,Error
+"Discount request for this product has already been sent","Discount request for this product has already been sent"
 "Personal Discount","Personal Discount"

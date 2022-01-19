@@ -1,0 +1,94 @@
+<form class="form dv-campus-personal-discount-form"
+      action="/errors/404.php"
+      onsubmit="return false;"
+      method="post"
+      data-bind="
+          afterRender: initModal,
+          submit: sendRequest,
+          visible: !formSubmitDeniedMessage()
+      "
+>
+    <fieldset class="fieldset">
+        <legend class="legend">
+            <span translate="'Discount Request'"></span>
+        </legend>
+        <br/>
+        <!-- @TODO: Get current customer name and email for logged in customers -->
+        <div class="field name required">
+            <label class="label" for="dv-campus-personal-discount-name">
+                <span translate="'Name'"></span>
+            </label>
+            <div class="control">
+                <input class="input-text"
+                       data-bind="
+                            value: customerName,
+                            attr: {
+                                title: $t('Name'),
+                                placeholder: $t('Name'),
+                            }
+                       "
+                       data-validate="{ required: true }"
+                       id="dv-campus-personal-discount-name"
+                       name="name"
+                       type="text"
+                />
+            </div>
+        </div>
+        <div class="field email required">
+            <label class="label" for="dv-campus-personal-discount-email">
+                <span translate="'Email'"></span>
+            </label>
+            <div class="control">
+                <input class="input-text"
+                       data-bind="
+                            value: customerEmail,
+                            attr: {
+                                title: $t('Email'),
+                                placeholder: $t('Email'),
+                            }
+                       "
+                       data-validate="{ required: true, 'validate-email': true }"
+                       id="dv-campus-personal-discount-email"
+                       name="email"
+                       type="email"
+                />
+            </div>
+        </div>
+        <div class="field email required">
+            <label class="label" for="dv-campus-personal-discount-message">
+                <span translate="'Message'"></span>
+            </label>
+            <div class="control">
+                    <textarea class="input-text"
+                              data-bind="
+                                    value: customerMessage,
+                                    attr: {
+                                        title: $t('Message'),
+                                        placeholder: $t('Message'),
+                                    }
+                              "
+                              data-validate="{ required: true }"
+                              id="dv-campus-personal-discount-message"
+                              name="message"
+                    ></textarea>
+            </div>
+        </div>
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit"
+                    data-bind="
+                        attr: {
+                            title: $t('Request a Discount')
+                        }
+                    "
+                    class="action submit primary"
+            >
+                <span translate="'Request a Discount'"></span>
+            </button>
+        </div>
+    </div>
+</form>
+<div class="message-info info message" data-bind="visible: formSubmitDeniedMessage()">
+    <div data-bind="text: formSubmitDeniedMessage()"></div>
+</div>
