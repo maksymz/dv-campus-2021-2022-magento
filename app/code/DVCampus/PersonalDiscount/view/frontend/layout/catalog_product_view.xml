@@ -33,7 +33,6 @@
                                                 <!-- <item name="productId" xsi:type="helper" -->
                                                       <!-- helper="DVCampus\PersonalDiscount\Helper\CurrentProduct::getCurrentProductId" -->
                                                 <!--  /> -->
-                                                <item name="isModal" xsi:type="string">true</item>
                                             </item>
                                         </item>
                                         <item name="personalDiscountRequestButton" xsi:type="array">
