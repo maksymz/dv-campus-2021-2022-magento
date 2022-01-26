@@ -4,32 +4,15 @@
  * @var \Magento\Framework\Escaper $escaper
  * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
  */
-/** @var \Magento\Catalog\Model\Product $product */
-$product = $block->getData('product');
-// Show form in modal window by default
-if ($block->hasData('is_modal')) {
-    $isModal = $block->getData('is_modal') ? 'true' : 'false';
-} else {
-    $isModal = 'true';
-}
 ?>
-<div class="dv-campus-personal-discount-form" data-bind="scope: 'personalDiscountRequestForm'">
+<div class="dv-campus-personal-discount-form-wrapper" data-bind="scope: 'personalDiscountRequest'">
     <!-- ko template: getTemplate() --><!-- /ko -->
 </div>
 
 <script type="text/x-magento-init">
     {
         "*": {
-            "Magento_Ui/js/core/app": {
-                "components": {
-                    "personalDiscountRequestForm": {
-                        "component": "DVCampus_PersonalDiscount_form",
-                        "action": "<?= $escaper->escapeJs($block->getUrl('dvcampus_personal_discount/index/request')) ?>",
-                        "productId": <?= (int) $block->getProduct()->getId() ?>,
-                        "isModal": <?= $escaper->escapeJs($isModal) ?>
-                    }
-                }
-            }
+            "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
         }
     }
 </script>
