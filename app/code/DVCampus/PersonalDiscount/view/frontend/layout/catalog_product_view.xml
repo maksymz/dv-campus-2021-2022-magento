@@ -33,12 +33,16 @@
                                                 <!-- <item name="productId" xsi:type="helper" -->
                                                       <!-- helper="DVCampus\PersonalDiscount\Helper\CurrentProduct::getCurrentProductId" -->
                                                 <!--  /> -->
-                                                <item name="isModal" xsi:type="string">true</item>
                                             </item>
                                         </item>
                                         <item name="personalDiscountRequestButton" xsi:type="array">
                                             <item name="component" xsi:type="string">DVCampus_PersonalDiscount_formOpenButton</item>
                                             <item name="displayArea" xsi:type="string">dvCampus-personalDiscount-formOpenButton</item>
+                                            <item name="config" xsi:type="array">
+                                                <item name="imports" xsi:type="array">
+                                                    <item name="isModal" xsi:type="string">personalDiscountRequest.personalDiscountRequestForm:isModal</item>
+                                                </item>
+                                            </item>
                                         </item>
                                     </item>
                                 </item>
