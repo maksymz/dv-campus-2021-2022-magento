@@ -8,6 +8,7 @@
                 <block class="DVCampus\PersonalDiscount\Block\Product\View\DiscountRequest"
                        name="dv.campus.personal.discount.form"
                        template="DVCampus_PersonalDiscount::catalog/product/view/personal_discount_request/form.phtml"
+                       ifconfig="dv_campus_personal_discount/general/enabled"
                        after="-"
                 >
                     <arguments>
@@ -30,12 +31,13 @@
                                                 />
                                                 <!-- Choose either `updater` or `xsi:type="helper"` -->
                                                 <item name="productId" xsi:type="number">0</item>
+                                                <item name="allowForGuests" xsi:type="boolean">false</item>
                                                 <!-- <item name="productId" xsi:type="helper" -->
                                                       <!-- helper="DVCampus\PersonalDiscount\Helper\CurrentProduct::getCurrentProductId" -->
                                                 <!--  /> -->
                                             </item>
                                         </item>
-                                        <item name="personalDiscountRequestButton" xsi:type="array">
+                                        <item name="personalDiscountRequestFormOpenButton" xsi:type="array">
                                             <item name="component" xsi:type="string">DVCampus_PersonalDiscount_formOpenButton</item>
                                             <item name="displayArea" xsi:type="string">dvCampus-personalDiscount-formOpenButton</item>
                                             <item name="config" xsi:type="array">
@@ -43,6 +45,10 @@
                                                     <item name="isModal" xsi:type="string">personalDiscountRequest.personalDiscountRequestForm:isModal</item>
                                                 </item>
                                             </item>
+                                        </item>
+                                        <item name="personalDiscountRequestLoginButton" xsi:type="array">
+                                            <item name="component" xsi:type="string">DVCampus_PersonalDiscount_loginButton</item>
+                                            <item name="displayArea" xsi:type="string">dvCampus-personalDiscount-loginButton</item>
                                         </item>
                                     </item>
                                 </item>
