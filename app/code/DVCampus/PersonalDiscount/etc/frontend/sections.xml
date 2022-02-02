@@ -6,4 +6,7 @@
     <action name="discount-request/index/request">
         <section name="personal-discount"/>
     </action>
+    <action name="customer/ajax/login">
+        <section name="personal-discount"/>
+    </action>
 </config>

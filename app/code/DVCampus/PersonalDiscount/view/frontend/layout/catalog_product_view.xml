@@ -37,7 +37,7 @@
                                                 <!--  /> -->
                                             </item>
                                         </item>
-                                        <item name="personalDiscountRequestButton" xsi:type="array">
+                                        <item name="personalDiscountRequestFormOpenButton" xsi:type="array">
                                             <item name="component" xsi:type="string">DVCampus_PersonalDiscount_formOpenButton</item>
                                             <item name="displayArea" xsi:type="string">dvCampus-personalDiscount-formOpenButton</item>
                                             <item name="config" xsi:type="array">
@@ -45,6 +45,10 @@
                                                     <item name="isModal" xsi:type="string">personalDiscountRequest.personalDiscountRequestForm:isModal</item>
                                                 </item>
                                             </item>
+                                        </item>
+                                        <item name="personalDiscountRequestLoginButton" xsi:type="array">
+                                            <item name="component" xsi:type="string">DVCampus_PersonalDiscount_loginButton</item>
+                                            <item name="displayArea" xsi:type="string">dvCampus-personalDiscount-loginButton</item>
                                         </item>
                                     </item>
                                 </item>
