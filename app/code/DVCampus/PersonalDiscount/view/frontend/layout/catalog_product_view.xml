@@ -8,6 +8,7 @@
                 <block class="DVCampus\PersonalDiscount\Block\Product\View\DiscountRequest"
                        name="dv.campus.personal.discount.form"
                        template="DVCampus_PersonalDiscount::catalog/product/view/personal_discount_request/form.phtml"
+                       ifconfig="dv_campus_personal_discount/general/enabled"
                        after="-"
                 >
                     <arguments>
