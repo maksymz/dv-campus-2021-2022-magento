@@ -12,11 +12,20 @@ class CurrentProductIdUpdater implements \Magento\Framework\View\Layout\Argument
     private \Magento\Catalog\Helper\Data $productHelper;
 
     /**
-     * @param \Magento\Catalog\Helper\Data $productHelper
+     * @var \DVCampus\PersonalDiscount\Model\Config $config
      */
-    public function __construct(\Magento\Catalog\Helper\Data $productHelper)
-    {
+    private \DVCampus\PersonalDiscount\Model\Config $config;
+
+    /**
+     * @param \Magento\Catalog\Helper\Data $productHelper
+     * @param Config $config
+     */
+    public function __construct(
+        \Magento\Catalog\Helper\Data $productHelper,
+        \DVCampus\PersonalDiscount\Model\Config $config
+    ) {
         $this->productHelper = $productHelper;
+        $this->config = $config;
     }
 
     /**
@@ -29,6 +38,8 @@ class CurrentProductIdUpdater implements \Magento\Framework\View\Layout\Argument
     {
         $value['components']['personalDiscountRequest']['children']['personalDiscountRequestForm']['config']
             ['productId'] = (int) $this->productHelper->getProduct()->getId();
+        $value['components']['personalDiscountRequest']['children']['personalDiscountRequestForm']['config']
+            ['allowForGuests'] = (bool) $this->config->allowForGuests();
 
         return $value;
     }

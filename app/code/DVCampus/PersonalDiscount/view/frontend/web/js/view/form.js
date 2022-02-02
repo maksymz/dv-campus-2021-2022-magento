@@ -14,12 +14,10 @@ define([
     return Component.extend({
         defaults: {
             action: '',
+            allowForGuests: false,
             isModal: true,
             productId: 0,
-            template: 'DVCampus_PersonalDiscount/form',
-            listens: {
-                formSubmitDeniedMessage: 'updateFormSubmitRestrictions'
-            }
+            template: 'DVCampus_PersonalDiscount/form'
         },
 
         customerName: '',
@@ -48,25 +46,25 @@ define([
             // Watch isLoggedIn and productIds because they come from the server
             this.observe(['customerName', 'customerEmail', 'customerMessage', 'isLoggedIn', 'productIds']);
 
-            this.formSubmitDeniedMessage = ko.computed(
-                function () {
-                    if (this.productIds().indexOf(this.productId) !== -1) {
-                        return $.mage.__('Discount request for this product has already been sent');
-                    }
+            this.customerMustLogIn = ko.computed(() => {
+                return !this.allowForGuests && !this.isLoggedIn()
+            });
+            formSubmitRestrictions.customerMustLogIn = this.customerMustLogIn;
 
-                    return '';
-                }.bind(this)
-            );
+            this.formSubmitDeniedMessage = ko.computed(() => {
+                if (this.productIds().includes(this.productId)) {
+                    return $.mage.__('Discount request for this product has already been sent');
+                }
 
+                if (this.customerMustLogIn()) {
+                    return $.mage.__('Please, log in to send a request');
+                }
+
+                return '';
+            });
+            formSubmitRestrictions.formSubmitDeniedMessage = this.formSubmitDeniedMessage;
 
             return this;
-        },
-
-        /**
-         * Update storage to indicate that new restrictions are in action
-         */
-        updateFormSubmitRestrictions: function () {
-            formSubmitRestrictions.formSubmitDeniedMessage(this.formSubmitDeniedMessage());
         },
 
         /**
