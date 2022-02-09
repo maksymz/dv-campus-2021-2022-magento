@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DVCampus\PersonalDiscount\ViewModel\Customer;
 
+use DVCampus\PersonalDiscount\Model\DiscountRequest;
 use DVCampus\PersonalDiscount\Model\ResourceModel\DiscountRequest\Collection as DiscountRequestCollection;
 use Magento\Catalog\Model\ResourceModel\Product\Collection as ProductCollection;
 use Magento\Catalog\Model\Product;
@@ -31,18 +32,26 @@ class RequestList implements \Magento\Framework\View\Element\Block\ArgumentInter
     private ProductCollection $loadedProductCollection;
 
     /**
+     * @var \DVCampus\PersonalDiscount\Ui\Component\DiscountRequest\Source\Status $statusOptions
+     */
+    private \DVCampus\PersonalDiscount\Ui\Component\DiscountRequest\Source\Status $statusOptions;
+
+    /**
      * @param \DVCampus\PersonalDiscount\Model\CustomerRequestsProvider $customerRequestsProvider
      * @param \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory
      * @param Product\Visibility $productVisibility
+     * @param \DVCampus\PersonalDiscount\Ui\Component\DiscountRequest\Source\Status $statusOptions
      */
     public function __construct(
         \DVCampus\PersonalDiscount\Model\CustomerRequestsProvider $customerRequestsProvider,
         \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory,
-        \Magento\Catalog\Model\Product\Visibility $productVisibility
+        \Magento\Catalog\Model\Product\Visibility $productVisibility,
+        \DVCampus\PersonalDiscount\Ui\Component\DiscountRequest\Source\Status $statusOptions
     ) {
         $this->customerRequestsProvider = $customerRequestsProvider;
         $this->productCollectionFactory = $productCollectionFactory;
         $this->productVisibility = $productVisibility;
+        $this->statusOptions = $statusOptions;
     }
 
     /**
@@ -79,5 +88,16 @@ class RequestList implements \Magento\Framework\View\Element\Block\ArgumentInter
         $this->loadedProductCollection = $productCollection;
 
         return $this->loadedProductCollection->getItemById($productId);
+    }
+
+    /**
+     * Get discount request label
+     *
+     * @param DiscountRequest $discountRequest
+     * @return string
+     */
+    public function getStatusLabel(DiscountRequest $discountRequest): string
+    {
+        return (string) $this->statusOptions->asArray()[$discountRequest->getStatus()];
     }
 }
