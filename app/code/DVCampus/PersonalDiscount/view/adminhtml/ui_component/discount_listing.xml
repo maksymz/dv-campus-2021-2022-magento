@@ -116,5 +116,10 @@
                 <options class="Magento\Store\Ui\Component\Listing\Column\Store\Options"/>
             </settings>
         </column>
+        <actionsColumn name="actions" class="DVCampus\PersonalDiscount\Ui\Component\DiscountRequest\Listing\Column\BlockActions">
+            <settings>
+                <indexField>discount_request_id</indexField>
+            </settings>
+        </actionsColumn>
     </columns>
 </listing>
