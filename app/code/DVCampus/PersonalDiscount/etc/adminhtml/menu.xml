@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="DVCampus_Core::general"
+             title="{DV.Campus}"
+             module="DVCampus_PersonalDiscount"
+             sortOrder="100"
+             parent="Magento_Backend::marketing"
+             resource="DVCampus_Core::general"
+        />
+        <add id="DVCampus_PersonalDiscount::listing"
+             title="Personal Discount"
+             translate="title"
+             module="DVCampus_PersonalDiscount"
+             sortOrder="100"
+             parent="DVCampus_Core::general"
+             action="dv_campus_personal_discount/discount/index"
+             resource="DVCampus_PersonalDiscount::listing"
+        />
+    </menu>
+</config>
