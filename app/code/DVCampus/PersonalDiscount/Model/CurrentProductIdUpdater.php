@@ -36,10 +36,13 @@ class CurrentProductIdUpdater implements \Magento\Framework\View\Layout\Argument
      */
     public function update($value): array
     {
-        $value['components']['personalDiscountRequest']['children']['personalDiscountRequestForm']['config']
-            ['productId'] = (int) $this->productHelper->getProduct()->getId();
-        $value['components']['personalDiscountRequest']['children']['personalDiscountRequestLoginButton']['config']
-            ['allowForGuests'] = (bool) $this->config->allowForGuests();
+        // Product is not present when Varnish ESI block are rendered via \Magento\PageCache\Controller\Block\Esi
+        if ($this->productHelper->getProduct()) {
+            $value['components']['personalDiscountRequest']['children']['personalDiscountRequestForm']['config']
+                ['productId'] = (int) $this->productHelper->getProduct()->getId();
+            $value['components']['personalDiscountRequest']['children']['personalDiscountRequestLoginButton']['config']
+                ['allowForGuests'] = (bool) $this->config->allowForGuests();
+        }
 
         return $value;
     }
