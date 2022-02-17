@@ -75,7 +75,7 @@ class InlineEdit extends \Magento\Backend\App\Action implements \Magento\Framewo
             /** @var DiscountRequestCollection $discountRequestCollection */
             $discountRequestCollection = $this->discountRequestCollectionFactory->create();
             $discountRequestCollection->addFieldToFilter(
-                $discountRequestCollection->getIdFieldName(),
+                $discountRequestCollection->getResource()->getIdFieldName(),
                 array_keys($items)
             );
 
