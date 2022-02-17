@@ -10,7 +10,6 @@ use Magento\Catalog\Model\ResourceModel\Product\Collection as ProductCollection;
 use Magento\Framework\App\Request\InvalidRequestException;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\Json;
-use Magento\Store\Model\ScopeInterface;
 
 class Request implements
     \Magento\Framework\App\Action\HttpPostActionInterface,

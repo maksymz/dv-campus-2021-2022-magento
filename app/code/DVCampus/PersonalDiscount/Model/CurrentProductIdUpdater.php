@@ -38,7 +38,7 @@ class CurrentProductIdUpdater implements \Magento\Framework\View\Layout\Argument
     {
         $value['components']['personalDiscountRequest']['children']['personalDiscountRequestForm']['config']
             ['productId'] = (int) $this->productHelper->getProduct()->getId();
-        $value['components']['personalDiscountRequest']['children']['personalDiscountRequestForm']['config']
+        $value['components']['personalDiscountRequest']['children']['personalDiscountRequestLoginButton']['config']
             ['allowForGuests'] = (bool) $this->config->allowForGuests();
 
         return $value;

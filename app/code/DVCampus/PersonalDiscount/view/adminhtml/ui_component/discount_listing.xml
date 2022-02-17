@@ -45,12 +45,76 @@
         <filters name="listing_filters"/>
         <exportButton name="export_button"/>
         <paging name="listing_paging"/>
+        <massaction class="DVCampus\PersonalDiscount\Ui\Component\DiscountRequest\Listing\MassAction"
+                    component="Magento_Ui/js/grid/tree-massactions"
+                    name="listing_massaction"
+        >
+            <action name="delete">
+                <settings>
+                    <confirm>
+                        <message translate="true">Are you sure you want to delete selected requests?</message>
+                        <title translate="true">Delete Requests</title>
+                    </confirm>
+                    <url path="dv_campus_personal_discount/discount/massDelete"/>
+                    <type>delete</type>
+                    <label translate="true">Delete</label>
+                </settings>
+            </action>
+            <action name="status">
+                <settings>
+                    <type>edit</type>
+                    <label translate="true">Change status</label>
+                    <actions>
+                        <action name="0">
+                            <type>pending</type>
+                            <label translate="true">Pending</label>
+                            <url path="dv_campus_personal_discount/discount/massChangeStatus">
+                                <param name="status">1</param>
+                            </url>
+                        </action>
+                        <action name="1">
+                            <type>approve</type>
+                            <label translate="true">Approved</label>
+                            <url path="dv_campus_personal_discount/discount/massChangeStatus">
+                                <param name="status">2</param>
+                            </url>
+                        </action>
+                        <action name="2">
+                            <type>decline</type>
+                            <label translate="true">Declined</label>
+                            <url path="dv_campus_personal_discount/discount/massChangeStatus">
+                                <param name="status">3</param>
+                            </url>
+                        </action>
+                    </actions>
+                </settings>
+            </action>
+        </massaction>
     </listingToolbar>
-    <columns name="discount_columns" template="DVCampus_PersonalDiscount/ui/grid/listing">
+    <columns name="discount_columns"
+             class="DVCampus\PersonalDiscount\Ui\Component\DiscountRequest\Listing\Columns"
+             template="DVCampus_PersonalDiscount/ui/grid/listing"
+    >
         <settings>
             <editorConfig>
-                <param name="enabled" xsi:type="boolean">false</param>
+                <param name="enabled" xsi:type="boolean">true</param>
+                <param name="clientConfig" xsi:type="array">
+                    <item name="saveUrl" xsi:type="url" path="*/*/inlineEdit"/>
+                    <item name="validateBeforeSave" xsi:type="boolean">false</item>
+                </param>
+                <param name="indexField" xsi:type="string">discount_request_id</param>
+                <param name="selectProvider" xsi:type="string">discount_listing.discount_listing.discount_columns.ids</param>
             </editorConfig>
+            <childDefaults>
+                <param name="fieldAction" xsi:type="array">
+                    <item name="provider" xsi:type="string">discount_listing.discount_listing.discount_columns_editor</item>
+                    <item name="target" xsi:type="string">startEdit</item>
+                    <item name="params" xsi:type="array">
+                        <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
+                        <item name="1" xsi:type="boolean">true</item>
+                    </item>
+                </param>
+            </childDefaults>
         </settings>
         <selectionsColumn name="ids" sortOrder="0">
             <settings>
@@ -133,6 +197,9 @@
                 <label translate="true">Status</label>
                 <filter>select</filter>
                 <dataType>select</dataType>
+                <editor>
+                    <editorType>select</editorType>
+                </editor>
                 <options class="DVCampus\PersonalDiscount\Ui\Component\DiscountRequest\Source\Status"/>
             </settings>
         </column>
